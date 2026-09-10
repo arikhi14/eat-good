@@ -1,18 +1,24 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useColorScheme } from 'react-native';
+import {
+  SpaceGrotesk_400Regular,
+  SpaceGrotesk_500Medium,
+  SpaceGrotesk_600SemiBold,
+  SpaceGrotesk_700Bold,
+  useFonts,
+} from "@expo-google-fonts/space-grotesk";
 
-import { AnimatedSplashOverlay } from '@/components/animated-icon';
-import AppTabs from '@/components/app-tabs';
+import { Stack } from "expo-router";
 
-SplashScreen.preventAutoHideAsync();
+export default function RootLayout() {
+  const [fontsLoaded] = useFonts({
+    "SpaceGrotesk-Regular": SpaceGrotesk_400Regular,
+    "SpaceGrotesk-Medium": SpaceGrotesk_500Medium,
+    "SpaceGrotesk-SemiBold": SpaceGrotesk_600SemiBold,
+    "SpaceGrotesk-Bold": SpaceGrotesk_700Bold,
+  });
 
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
-  return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <AnimatedSplashOverlay />
-      <AppTabs />
-    </ThemeProvider>
-  );
+  if (!fontsLoaded) {
+    return null;
+  }
+
+  return <Stack screenOptions={{ headerShown: false }} />;
 }
